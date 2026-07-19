@@ -15,7 +15,12 @@ import logging
 import re
 from typing import Optional
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+try:
+    from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+except Exception:  # pragma: no cover - used in environments without the package
+    LlmChat = None
+    UserMessage = None
+    ImageContent = None
 
 log = logging.getLogger("cropvision.vision")
 

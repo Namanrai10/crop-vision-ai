@@ -16,7 +16,11 @@ import re
 from typing import Any, Optional, Callable, Awaitable
 from dataclasses import dataclass, field, asdict
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+try:
+    from emergentintegrations.llm.chat import LlmChat, UserMessage
+except Exception:  # pragma: no cover - used in environments without the package
+    LlmChat = None
+    UserMessage = None
 
 log = logging.getLogger("cropvision.langgraph")
 
