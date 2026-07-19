@@ -608,12 +608,14 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def _startup():
-    # indexes
-    await _db.fields.create_index([("location", "2dsphere")])
-    await _db.users.create_index("email", unique=True)
-    await _db.detections.create_index([("field_id", 1), ("created_at", -1)])
-    await _db.alerts.create_index([("owner_id", 1), ("created_at", -1)])
-    await _db.inference_jobs.create_index([("status", 1), ("created_at", -1)])
+    try:
+        await _db.fields.create_index([("location", "2dsphere")])
+        await _db.users.create_index("email", unique=True)
+        await _db.detections.create_index([("field_id", 1), ("created_at", -1)])
+        await _db.alerts.create_index([("owner_id", 1), ("created_at", -1)])
+        await _db.inference_jobs.create_index([("status", 1), ("created_at", -1)])
+    except Exception as exc:
+        log.warning("Mongo indexes skipped: %s", exc)
     queue.start()
     log.info("CropVision AI startup complete")
 
