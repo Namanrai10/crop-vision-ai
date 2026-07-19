@@ -47,8 +47,8 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
 
 # ---------- Mongo ----------
-MONGO_URL = os.environ["MONGO_URL"]
-DB_NAME = os.environ["DB_NAME"]
+MONGO_URL = os.environ.get("MONGO_URL", "mongodb://127.0.0.1:27017")
+DB_NAME = os.environ.get("DB_NAME", "cropvision")
 _client = AsyncIOMotorClient(MONGO_URL)
 _db = _client[DB_NAME]
 
